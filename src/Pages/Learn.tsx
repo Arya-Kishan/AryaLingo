@@ -15,7 +15,7 @@ const Learn = () => {
   const [count, setCount] = useState<number>(0)
   const navigate = useNavigate()
 
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams();
   const lang = searchParams.get("lang") as string;
   const code = searchParams.get("code");
 
@@ -45,6 +45,8 @@ const Learn = () => {
 
   useEffect(() => {
     getConvertedWord()
+    console.log(setSearchParams);
+
   }, [])
 
 
