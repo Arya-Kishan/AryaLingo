@@ -39,9 +39,12 @@ const Option = ({ correctAnswer, word, index }: propsType) => {
 
 
     return (
-        <div onClick={() => handleBackground()} className={`w-[80%] ${bg} p-2 rounded-lg flex gap-2 cursor-pointer`}>
+        <div onClick={() => handleBackground()} className={`w-full ${bg} p-2 rounded-lg flex gap-2 cursor-pointer z-10`}>
+
             <span className="w-[30px] h-[30px] rounded-full bg-yellow-300 flex items-center justify-center text-black">{index + 1}</span>
+
             <p>{word}</p>
+
         </div>
     )
 }

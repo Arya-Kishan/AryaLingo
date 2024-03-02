@@ -36,12 +36,18 @@ export const translateSlice = createSlice({
     clearResult: (state) => {
       state.result = []
     },
+    clearRandomWords: (state) => {
+      state.randomWord = []
+    },
+    clearConvertedWords: (state) => {
+      state.convertedWord = []
+    },
     changeBg: (state, action) => {
       state.changeOptionBg = action.payload;
     }
   },
 })
 
-export const { getRandom, getConverted, gettingWord, changeBg, setResult, clearResult } = translateSlice.actions
+export const { getRandom, getConverted, gettingWord, changeBg, setResult, clearResult, clearRandomWords, clearConvertedWords } = translateSlice.actions
 
 export default translateSlice.reducer

@@ -2,9 +2,12 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import Translate from '../Components/Translate';
 import { useDispatch, useSelector } from 'react-redux';
-import { getConverted } from '../Redux/translateSlice';
+import { clearRandomWords, getConverted, getRandom } from '../Redux/translateSlice';
 import { RootState } from '../Redux/Store';
 import Speak from '../Components/Speak';
+import mic from '../assets/icons/speaker.png'
+import star from '../assets/icons/star.png'
+import { generate } from 'random-words';
 
 const Learn = () => {
 
@@ -37,49 +40,55 @@ const Learn = () => {
   const handleSpeak = (word: string) => {
     Speak(word, lang)
   }
-
-  const handleQuiz = () => {
-    navigate("/quiz")
+  const getNewWords = () => {
+    dispatch(clearRandomWords())
+    dispatch(getRandom(generate(8)))
+    getConvertedWord()
   }
 
 
   useEffect(() => {
     getConvertedWord()
     console.log(setSearchParams);
-
-  }, [])
-
-
-  console.log(randomWord);
-  console.log(convertedWord);
+  }, [randomWord])
 
 
   return (
     <div className='w-full h-[100vh] bg-black text-white flex flex-col items-center justify-start gap-10 pt-10'>
 
-      {convertedWord && convertedWord.length > 0 ? <>
-        <p className='w-full h-[10vh] text-4xl text-white text-center uppercase'>{lang} Language</p>
+      {convertedWord && convertedWord.length > 0 && <>
 
-        <div className='w-full h-[50vh] flex flex-col justify-between items-center p-10'>
+        <h1 className='w-full h-[20vh] text-4xl text-white text-center uppercase z-10'>{lang} Language</h1>
 
-          <p className='w-full flex gap-10 justify-start text-2xl items-center md:text-4xl'>
+        <div className='w-full h-[80vh] flex flex-col justify-between items-center'>
+
+          <p className='w-full flex gap-10 justify-start text-2xl items-center md:text-4xl p-10 z-10'>
             <span>{count + 1}.</span>
             <span>{convertedWord[count]}</span>
             <span>{randomWord[count]}</span>
-            <svg onClick={() => handleSpeak(convertedWord[count])} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" />
-            </svg>
+            <img className='w-[20px]' onClick={() => handleSpeak(convertedWord[count])} src={mic} alt="" srcSet="" />
           </p>
 
-          {count >= 7 ? <button className='w-[100%] text-2xl p-2 flex justify-center items-center bg-teal-950 cursor-pointer' onClick={() => handleQuiz()}>Quiz</button> : <button className='w-[100%] text-2xl p-2 flex justify-center items-center bg-teal-950 cursor-pointer' onClick={() => setCount((prev) => prev + 1)}>Next</button>}
+          <div className='w-full h-full bg-teal-900 p-5 rounded-tl-[60px] rounded-tr-[60px] flex flex-col gap-5 pt-20 z-10'>
 
-          <div className='w-[100%] text-2xl p-2 flex justify-center items-center bg-teal-950 cursor-pointer' onClick={() => navigate("/quiz")}>QUIZ</div>
+            <div className='w-full flex justify-around'>
+              <button className='w-[40%] bg-white text-black p-2' onClick={() => setCount((prev) => prev - 1)} disabled={count <= 0 ? true : false} >   Previous</button>
+              <button className='w-[40%] bg-white text-black p-2' onClick={() => setCount((prev) => prev + 1)} disabled={count >= 7 ? true : false}>Next</button>
+            </div>
+
+            <div className='w-full flex justify-around'>
+              <button className='w-[40%] bg-white text-black p-2' onClick={getNewWords}>New Words</button>
+              <button className='w-[40%] bg-white text-black p-2' onClick={() => navigate("/quiz")}>QUIZ</button>
+            </div>
+
+          </div>
 
         </div>
-      </> : <div className='flex flex-col gap-5'>
-        <p>CHOOSE A LANGUAGE</p>
-        <button className='w-full bg-teal-300 p-2 rounded-lg' onClick={() => navigate("/")}>CHOOSE</button>
-      </div>}
+
+
+        {randomWord.map((e, i) => (<img className='w-[20px] z-1' id={`star${i + 1}`} src={star} alt={e} srcSet="" />))}
+
+      </>}
 
     </div>
   )

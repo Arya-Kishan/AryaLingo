@@ -8,7 +8,6 @@ const Result = () => {
 
     const [number, setNumber] = useState<number>(0)
     const { randomWord } = useSelector((state: RootState) => state.translate)
-    const { convertedWord } = useSelector((state: RootState) => state.translate)
     const { result } = useSelector((state: RootState) => state.translate)
 
     const checkResult = () => {
@@ -27,47 +26,44 @@ const Result = () => {
 
 
     return (
-        <div className='w-full h-[100vh] bg-black text-white flex flex-col items-center justify-start gap-10 pt-10'>
+        <div className='w-full min-h-[100vh] bg-teal-900 text-white flex flex-col items-center justify-start gap-10 pt-10'>
 
             <h1 className='text-4xl'>RESULT</h1>
 
-            <div className='w-[80%] flex items-center justify-around bg-teal-600 rounded-lg p-2'>
+            <div className='w-full grid grid-cols-4 gap-2 px-10'>
 
-                <div>
-                    <p>Correct :{number}</p>
-                    <p>Wrong :{8 - number}</p>
+                <div className='w-full col-span-3 flex flex-col items-center justify-center gap-3'>
+
+                    <p className='w-full'>Correct : {number}</p>
+                    <p className='w-full'>Wrong : {8 - number}</p>
+                    <div className='w-full bg-white'>
+                        <p className={`w-[${number*10}%] bg-red-600 h-[10px]`}></p>
+                    </div>
+
                 </div>
 
-                <div style={{ width: 100, height: 100 }}>
-                    <CircularProgressbar value={number} text={`${number}%`} />
-                </div>
+                <div className='w-full flex justify-center '>
 
-            </div>
+                    <div style={{ width: 100, height: 100 }} className='w-full'>
+                        <CircularProgressbar value={number * 10} text={`${number * 10}%`} />
+                    </div>
 
-            <div className='flex flex-col gap-6'>
-
-                <div className='w-full justify-around flex gap-10 text-xl md:text-2xl'>
-                    <p>Word</p>
-                    <p>Answer</p>
-                    <p>Choosed</p>
-                </div>
-
-                <div>
-                    {randomWord.map((e, i) => (
-                        <div key={i} className='flex gap-5 md:gap-10'>
-                            <p className='w-[70px] md:w-[100px] text-[]15px md:text-2xl'>{e}</p>
-                            <p className='w-[70px] md:w-[100px] text-[]15px md:text-2xl'>{convertedWord[i]}</p>
-                            <p className='w-[70px] md:w-[100px] text-[]15px md:text-2xl'>{result[i] == e ? <span className='text-green-600'>{result[i]}</span> : <span className='text-red-600'>{result[i]}</span>}</p>
-                        </div>
-                    ))}
                 </div>
 
             </div>
 
-            <div className='w-[80%] text-2xl bg-teal-500 p-2 rounded-lg'>
+            <div className='flex items-center justify-start flex-wrap gap-5 px-10'>
+                {randomWord.map((e, i) => (
 
-                Result : {number > 4 ? <span className='text-green-600 font-bold'>Pass</span> : <span className='text-red-600 font-bold'>Fail</span>}
+                    <div key={i} className={`${result[i] == e ? "bg-green-600" : "bg-red-700"} w-[100px] h-[70px] md:w-[200px] md:h-[100px] flex flex-col items-center justify-center`}>
 
+                        <p className='text-[15px] md:text-2xl'>{e}</p>
+
+                        <p className='text-[15px] md:text-2xl'>{result[i]}</p>
+
+                    </div>
+
+                ))}
             </div>
 
         </div>

@@ -1,3 +1,126 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+#pi,
+#circle,
+#triangle,
+#cube {
+    animation: anime1 ease-in-out 3s infinite;
+}
+
+@keyframes anime1 {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+#bigPic1,
+#bigPic2 {
+    width: 500px;
+    height: 520px;
+}
+
+@media screen and (max-width: 1300px) {
+
+    #bigPic1,
+    #bigPic2 {
+        width: 400px;
+        height: 420px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+
+    #bigPic1,
+    #bigPic2 {
+        width: 300px;
+        height: 320px;
+    }
+}
+
+
+#star1 {
+    position: fixed;
+    top: 10%;
+    left: 10%;
+    animation: star ease-in-out 10s infinite;
+}
+
+#star2 {
+    position: fixed;
+    top: 20%;
+    left: 60%;
+    animation: star ease-in-out 10s infinite;
+}
+
+#star3 {
+    position: fixed;
+    top: 30%;
+    left: 47%;
+    animation: star ease-in-out 30s infinite;
+}
+
+#star4 {
+    position: fixed;
+    top: 40%;
+    left: 66%;
+    animation: star ease-in-out 25s infinite;
+}
+
+#star5 {
+    position: fixed;
+    top: 50%;
+    left: 12%;
+    animation: star ease-in-out 20s infinite;
+}
+
+#star6 {
+    position: fixed;
+    top: 60%;
+    left: 46%;
+    animation: star ease-in-out 35s infinite;
+}
+
+#star7 {
+    position: fixed;
+    top: 70%;
+    left: 24%;
+    animation: star ease-in-out 20s infinite;
+}
+
+#star8 {
+    position: fixed;
+    top: 80%;
+    left: 60%;
+    animation: star ease-in-out 40s infinite;
+}
+
+
+@keyframes star {
+    0% {
+        transform: translateY(0vh);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: .6;
+    }
+
+    100% {
+        transform: translateY(-100vh);
+        opacity: 0.2;
+    }
+}
