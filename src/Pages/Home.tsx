@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { generate } from 'random-words';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { getRandom, gettingWord } from '../Redux/translateSlice';
+import { clearConvertedWords, getRandom, gettingWord } from '../Redux/translateSlice';
 import Russia from '../assets/./Flags/Russia.svg'
 import Hindi from '../assets/./Flags/India.svg'
 import China from '../assets/./Flags/China.svg'
@@ -49,6 +49,7 @@ const Home = () => {
 
     const handleLanguage = (lan: string, code: string) => {
         dispatch(gettingWord())
+        dispatch(clearConvertedWords())
         navigate(`/learn?lang=${lan}&code=${code}`)
     }
 
@@ -64,17 +65,17 @@ const Home = () => {
 
                 <div className='flex flex-col gap-4 justify-start items-center md:overflow-scroll order-2 md:order-1'>
 
-                    <h1 className='w-full text-4xl text-white flex items-center justify-center sticky top-0 left-0 bg-teal-900 p-2'>Choose Language</h1>
+                    <h1 className='w-full text-4xl text-white flex items-center justify-center sticky top-0 left-0 bg-teal-900 p-2 font-semibold'>Choose Language</h1>
 
-                    <div className='w-full flex flex-wrap gap-4 items-center justify-center'>
+                    <div className='w-full flex flex-wrap gap-4 items-center justify-center pb-6'>
 
                         {languageArr.map((e, i) => (
 
-                            <div onClick={() => handleLanguage(e.language, e.code)} key={e.code} className='w-[150px] h-[150px] bg-teal-400 flex flex-col items-center justify-center gap-2 cursor-pointer bg-gradient-to-t from-teal-800 to-teal-400 rounded-2xl'>
+                            <div onClick={() => handleLanguage(e.language, e.code)} key={e.code} className='w-[150px] h-[150px] bg-teal-400 flex flex-col items-center justify-center gap-2 cursor-pointer bg-gradient-to-t from-teal-800 to-teal-400 rounded-2xl shadow-2xl'>
 
-                                <img className='w-[10px] md:w-[30px]' src={flagsArr[i]} alt="" srcSet="" />
+                                <img className='w-[30px] md:w-[30px]' src={flagsArr[i]} alt="" srcSet="" />
 
-                                <p className='text-[14px] md:text-[22px]'>{e.language}</p>
+                                <p className='text-xl md:text-2xl'>{e.language}</p>
                             </div>
 
                         ))}

@@ -8,6 +8,7 @@ import Speak from '../Components/Speak';
 import mic from '../assets/icons/speaker.png'
 import star from '../assets/icons/star.png'
 import { generate } from 'random-words';
+import Loading from '../Components/Loading';
 
 const Learn = () => {
 
@@ -56,29 +57,30 @@ const Learn = () => {
   return (
     <div className='w-full h-[100vh] bg-black text-white flex flex-col items-center justify-start gap-10 pt-10'>
 
-      {convertedWord && convertedWord.length > 0 && <>
+      {convertedWord && convertedWord.length > 0 ? <>
 
         <h1 className='w-full h-[20vh] text-4xl text-white text-center uppercase z-10'>{lang} Language</h1>
 
         <div className='w-full h-[80vh] flex flex-col justify-between items-center'>
 
-          <p className='w-full flex gap-10 justify-start text-2xl items-center md:text-4xl p-10 z-10'>
+          <p className='w-full flex gap-5 capitalize md:gap-10 justify-start text-2xl items-center md:text-4xl p-10 z-10'>
             <span>{count + 1}.</span>
             <span>{convertedWord[count]}</span>
             <span>{randomWord[count]}</span>
-            <img className='w-[20px]' onClick={() => handleSpeak(convertedWord[count])} src={mic} alt="" srcSet="" />
+            <img className='w-[20px] cursor-pointer' onClick={() => handleSpeak(convertedWord[count])} src={mic} alt="" srcSet="" />
           </p>
 
+          {/* BUTTONS */}
           <div className='w-full h-full bg-teal-900 p-5 rounded-tl-[60px] rounded-tr-[60px] flex flex-col gap-5 pt-20 z-10'>
 
             <div className='w-full flex justify-around'>
-              <button className='w-[40%] bg-white text-black p-2' onClick={() => setCount((prev) => prev - 1)} disabled={count <= 0 ? true : false} >   Previous</button>
-              <button className='w-[40%] bg-white text-black p-2' onClick={() => setCount((prev) => prev + 1)} disabled={count >= 7 ? true : false}>Next</button>
+              <button className='w-[40%] bg-white text-black hover:bg-teal-300 p-2' onClick={() => setCount((prev) => prev - 1)} disabled={count <= 0 ? true : false} >   Previous</button>
+              <button className='w-[40%] bg-white text-black hover:bg-teal-300 p-2' onClick={() => setCount((prev) => prev + 1)} disabled={count >= 7 ? true : false}>Next</button>
             </div>
 
             <div className='w-full flex justify-around'>
-              <button className='w-[40%] bg-white text-black p-2' onClick={getNewWords}>New Words</button>
-              <button className='w-[40%] bg-white text-black p-2' onClick={() => navigate("/quiz")}>QUIZ</button>
+              <button className='w-[40%] bg-white text-black hover:bg-teal-300 p-2' onClick={getNewWords}>New Words</button>
+              <button className={`w-[40%] ${count >= 7 ? 'bg-yellow-600' : 'bg-white'} text-black hover:bg-teal-300 p-2`} onClick={() => navigate("/quiz")}>QUIZ</button>
             </div>
 
           </div>
@@ -86,9 +88,9 @@ const Learn = () => {
         </div>
 
 
-        {randomWord.map((e, i) => (<img className='w-[20px] z-1' id={`star${i + 1}`} src={star} alt={e} srcSet="" />))}
+        {randomWord.map((e, i) => (<img className='w-[20px] z-1' id={`star${i + 1}`} src={star} key={i} alt={e} srcSet="" />))}
 
-      </>}
+      </> : <Loading />}
 
     </div>
   )
