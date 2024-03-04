@@ -15,7 +15,7 @@ const Navbar = () => {
         <p className='text-white text-3xl font-bold bg-gradient-to-r from-teal-600 to-teal-400 text-transparent bg-clip-text'>Aryalingo</p>
       </div>
 
-      <img onClick={() => navigate("/converter")} className='w-[20px]' src={logo1} alt="" />
+      <img onClick={() => navigate("/converter")} className='w-[20px] cursor-pointer' src={logo1} alt="" />
 
     </div>
   )

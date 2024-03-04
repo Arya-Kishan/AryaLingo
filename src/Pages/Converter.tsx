@@ -6,13 +6,21 @@ import { FaArrowRightArrowLeft } from "react-icons/fa6";
 import { IoIosCopy } from "react-icons/io";
 import "regenerator-runtime/runtime.js";
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import loader from '../assets/loader.svg'
 
 
 
 const Converter = () => {
 
+
+    const {
+        transcript,
+        finalTranscript,
+        listening,
+    } = useSpeechRecognition();
     const [languages, setLanguages] = useState<string>("तुम कैसे हो")
     const [showMicDiv, setShowMicDiv] = useState<boolean>(false)
+    const [showLoader, setShowLoader] = useState<boolean>(false)
     const inputRef = useRef<HTMLInputElement>(null)
     const textAreaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -158,7 +166,9 @@ const Converter = () => {
         let code = inputRef.current?.value.split("-")[1]!;
         console.log(code);
 
+        setShowLoader(true)
         let word = await Translate(code ? code : "hi", [{ Text: textAreaRef.current?.value! }])
+        setShowLoader(false)
         console.log(word);
         if (word) {
             setLanguages(word[0])
@@ -181,12 +191,6 @@ const Converter = () => {
 
     }
 
-    const {
-        transcript,
-        finalTranscript,
-        listening,
-    } = useSpeechRecognition();
-
     if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
         return null;
     }
@@ -208,6 +212,7 @@ const Converter = () => {
             if (textAreaRef.current) {
                 textAreaRef.current.value = transcript;
                 setShowMicDiv(false)
+                getConvert()
             }
         }
 
@@ -221,15 +226,18 @@ const Converter = () => {
             <div className='w-full h-[calc(100vh-40px)] flex flex-col justify-around items-center'>
 
                 {/* LANGUAGE SELECT */}
-                <div className='w-[80%] flex justify-around items-center bg-white p-2 rounded-lg'>
+                <div className='w-[90%] flex justify-around items-center bg-white p-2 rounded-lg'>
 
-                    <div className='w-[150px] text-2xl'>English</div>
+                    <div className='w-[130px] md:w-[100%] text-xl md:text-2xl flex justify-center md:justify-start'>English</div>
 
-                    <div><FaArrowRightArrowLeft /></div>
+                    <div className='w-[30px] h-[30px] flex justify-center items-center'>
+                        {showLoader ? <img className='w-[30px] h-[30px]' src={loader} alt="" srcSet="" /> :
+                            <FaArrowRightArrowLeft />}
+                    </div>
 
-                    <div className='flex gap-5'>
+                    <div className='w-[130px] md:w-[100%] flex gap-5'>
 
-                        <input className='w-[150px] text-end text-2xl placeholder-black outline-none' ref={inputRef} list="browsers" name="browser" id="browser" placeholder='Hindi' />
+                        <input className='w-full text-end text-xl md:text-2xl placeholder-black outline-none' ref={inputRef} list="browsers" name="browser" id="browser" placeholder='Choose' />
 
                         <datalist id="browsers">
                             {lan.map((e) => (<option className='text-2xl' key={e.name} value={`${e.name}-${e.code}`} />))}
