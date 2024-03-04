@@ -4,6 +4,7 @@ import Home from './Pages/Home'
 import Learn from './Pages/Learn'
 import Quiz from './Pages/Quiz'
 import Result from './Pages/Result'
+import Converter from './Pages/Converter'
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
           <Route path='/learn' element={<Learn />} />
           <Route path='/quiz' element={<Quiz />} />
           <Route path='/result' element={<Result />} />
+          <Route path='/converter' element={<Converter />} />
         </Routes>
       </BrowserRouter>
     </>
